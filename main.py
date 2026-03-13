@@ -72,3 +72,44 @@ def main():
     if not vector_store or not embedder:
         console.print("[bold red]Failed to initialize the codebase engine. Exiting.[/bold red]")
         return
+
+    # --- 3. CHAT INTERFACE ---
+    chat_ui = CLIChat()
+    chat_ui.display_header(repo_name)
+    feedback_service = FeedbackCollector()
+    
+    while True:
+        try:
+            query = Prompt.ask("\n[bold cyan]Query[/bold cyan]")
+            
+            if query.lower() in ["exit", "quit"]:
+                console.print("[yellow]Goodbye![/yellow]")
+                break
+            
+            if not query.strip():
+                continue
+
+            # Execute Query (Reranking + Groq)
+            # This triggers the streaming response in the terminal
+            answer_text = run_query(query, vector_store, embedder)
+            
+            # --- 4. FEEDBACK & LEARNING LOOP ---
+            console.print("\n" + "─" * 60)
+            feedback = Prompt.ask(
+                "[italic white]Was this answer helpful?[/italic white]", 
+                choices=["y", "n"], 
+                default="y"
+            )
+            
+            rating = 1 if feedback == "y" else 0
+            # Save the query/answer pair to help the RankingOptimizer learn
+            feedback_service.save_feedback(query, answer_text, rating)
+
+        except KeyboardInterrupt:
+            console.print("\n[yellow]Session ended by user. Exiting...[/yellow]")
+            break
+        except Exception as e:
+            console.print(f"[bold red]System Error:[/bold red] {e}")
+
+if __name__ == "__main__":
+    main()
