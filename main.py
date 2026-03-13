@@ -30,7 +30,7 @@ def display_welcome():
 
 def main():
     display_welcome()
-    
+
     # --- 1. INITIALIZATION ---
     repo_url = Prompt.ask("[bold yellow]Enter the GitHub Repository URL[/bold yellow]")
     
@@ -40,3 +40,35 @@ def main():
     
     vector_store = None
     embedder = None
+
+    # --- 2. INDEX LOADING LOGIC ---
+    if os.path.exists(repo_index_path):
+        use_existing = Prompt.ask(
+            f"Index for [green]{repo_name}[/green] found. Use existing index?", 
+            choices=["y", "n"], 
+            default="y"
+        )
+        if use_existing == "y":
+            with console.status("[bold blue]Loading vector engine...[/bold blue]"):
+                embedder = Embedder()
+                vector_store = VectorStore.load(repo_name)
+            
+            # Load metadata if available
+            meta = RepoMetadata.load(repo_index_path)
+            if meta:
+                # Accessing dictionary keys safely via .get()
+                stats = meta.get('stats', {})
+                console.print(f"[dim]Total Chunks: {stats.get('total_chunks', 'N/A')} | "
+                              f"Files: {stats.get('total_files', 'N/A')}[/dim]")
+        else:
+            vector_store = run_ingestion(repo_url)
+            embedder = Embedder()
+    else:
+        # No existing index found, start full ingestion
+        vector_store = run_ingestion(repo_url)
+        embedder = Embedder()
+
+    # Final safety check to ensure engine is ready
+    if not vector_store or not embedder:
+        console.print("[bold red]Failed to initialize the codebase engine. Exiting.[/bold red]")
+        return
