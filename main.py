@@ -30,3 +30,13 @@ def display_welcome():
 
 def main():
     display_welcome()
+    
+    # --- 1. INITIALIZATION ---
+    repo_url = Prompt.ask("[bold yellow]Enter the GitHub Repository URL[/bold yellow]")
+    
+    # Generate clean name for paths (e.g., 'Virtual-Mouse')
+    repo_name = repo_url.rstrip("/").split("/")[-1].replace(".git", "")
+    repo_index_path = os.path.join("data", "vectors", repo_name)
+    
+    vector_store = None
+    embedder = None
