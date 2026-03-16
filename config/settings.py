@@ -10,5 +10,5 @@ SUPPORTED_EXTENSIONS = {'.py', '.js', '.ts', '.java', '.cpp', '.md', '.json', '.
 IGNORE_DIRS = {'.git', 'node_modules', '__pycache__', 'venv', 'dist', 'build', 'env'}
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_BASE_URL = "https://api.groq.com/openai/v1"
-LLM_MODEL = "llama-3.3-70b-versatile"
+GROQ_BASE_URL = os.getenv("GROQ_BASE_URL")
+LLM_MODEL = os.getenv("LLM_MODEL")
