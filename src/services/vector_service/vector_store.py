@@ -18,3 +18,14 @@ class VectorStore:
         vectors = np.array(embeddings).astype('float32')
         self.index.add(vectors)
         self.metadata.extend(chunks)
+        
+    def save(self, repo_name):
+        save_path = Path(VECTOR_DB_PATH) / repo_name
+        save_path.mkdir(parents=True, exist_ok=True)
+        
+        faiss.write_index(self.index, str(save_path / "index.faiss"))
+        with open(save_path / "metadata.pkl", "wb") as f:
+            pickle.dump(self.metadata, f)
+        # Explicitly save the structure for LLM verification
+        with open(save_path / "structure.json", "w") as f:
+            json.dump(self.file_structure, f, indent=4)
