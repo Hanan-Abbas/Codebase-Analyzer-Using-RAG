@@ -29,3 +29,25 @@ class VectorStore:
         # Explicitly save the structure for LLM verification
         with open(save_path / "structure.json", "w") as f:
             json.dump(self.file_structure, f, indent=4)
+
+    @classmethod
+    def load(cls, repo_name):
+        load_path = Path(VECTOR_DB_PATH) / repo_name
+        index = faiss.read_index(str(load_path / "index.faiss"))
+        with open(load_path / "metadata.pkl", "rb") as f:
+            metadata = pickle.load(f)
+        
+        structure = []
+        struct_file = load_path / "structure.json"
+        if struct_file.exists():
+            with open(struct_file, "r") as f:
+                structure = json.load(f)
+        
+        instance = cls(index.d)
+        instance.index = index
+        instance.metadata = metadata
+        instance.file_structure = structure
+        return instance
+
+    def get_verified_structure(self):
+        return self.file_structure
