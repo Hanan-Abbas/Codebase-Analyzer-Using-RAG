@@ -25,3 +25,16 @@ class AnswerGenerator:
                 ],
                 stream=True,
             )
+
+            for chunk in stream:
+                if chunk.choices[0].delta.content:
+                    text_chunk = chunk.choices[0].delta.content
+                    print(text_chunk, end="", flush=True)
+                    full_response += text_chunk
+            
+            print("\n")
+            return full_response
+
+        except Exception as e:
+            console.print(f"[bold red]Groq API Error:[/bold red] {e}")
+            return "Failed to reach Groq. Check your API key and connection."
