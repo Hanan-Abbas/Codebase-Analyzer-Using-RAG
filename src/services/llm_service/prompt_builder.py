@@ -5,3 +5,10 @@ class PromptBuilder:
         """Converts a flat list of paths into a visual ASCII tree."""
         if not file_paths:
             return "No structure data available."
+        
+        tree = {}
+        for path in file_paths:
+            parts = path.strip("/").split("/")
+            current = tree
+            for part in parts:
+                current = current.setdefault(part, {})
