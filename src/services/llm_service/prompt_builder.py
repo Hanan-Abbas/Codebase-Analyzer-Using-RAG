@@ -25,4 +25,14 @@ class PromptBuilder:
                     lines.extend(_render(children, prefix + extension))
             return lines
 
-        return "\n".join(_render(tree))
+        return "\n".join(_render(tree))def build_code_qa_prompt(self, query, context_docs, physical_files=None):
+        # Generate the visual tree hierarchy
+        repo_tree = self._build_tree_string(physical_files)
+        
+        # Format the code chunks
+        code_context = "\n\n".join([
+            f"--- SOURCE: {d.metadata.get('file_path', 'Unknown')} ---\n{d.page_content}" 
+            for d in context_docs
+        ])
+
+        return f"""You are RepoMind, an AI Code Expert with high-level Repository Authority.
