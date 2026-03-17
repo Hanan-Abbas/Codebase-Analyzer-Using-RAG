@@ -21,3 +21,13 @@ class FeedbackCollector:
                     timestamp TEXT
                 )
             """)
+
+    def save_feedback(self, question, answer, rating):
+        """Rating: 1 for Good, 0 for Bad"""
+        # Indented 4 spaces
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(
+                "INSERT INTO feedback (question, answer, rating, timestamp) VALUES (?, ?, ?, ?)",
+                (question, answer, rating, datetime.now().isoformat())
+            )
+        print(f"\n[Learning Service] Feedback saved to local database.")
