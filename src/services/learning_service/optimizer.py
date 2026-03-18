@@ -12,8 +12,8 @@ class RankingOptimizer:
         """
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            optimized_chunks = []
-
+            optimized_chunks = [] 
+                      
             for item in retrieved_chunks:
                 # FIX: Access the Document object from the dict first
                 doc_obj = item['doc'] 
@@ -31,4 +31,4 @@ class RankingOptimizer:
                 optimized_chunks.append(item)
 
         # Sort by the new boosted score (descending)
-        return sorted(optimized_chunks, key=lambda x: x['score'], reverse=True)
+        return sorted(optimized_chunks, key=lambda x: x['score'], reverse=True)       
