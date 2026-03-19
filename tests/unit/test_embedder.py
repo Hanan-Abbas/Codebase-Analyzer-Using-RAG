@@ -28,3 +28,11 @@ def test_embedder_multiple_inputs():
     
     assert len(embeddings) == 3
     assert len(embeddings[0]) == 384
+
+def test_embedder_empty_input():
+    """Ensures the embedder returns an empty structure for empty input."""
+    embedder = Embedder()
+    embeddings = embedder.generate_embeddings([])
+    
+    # SentenceTransformers often return a numpy array by default
+    assert len(embeddings) == 0
