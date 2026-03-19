@@ -20,3 +20,20 @@ s
         {"doc": doc_a, "score": 0.5},
         {"doc": doc_b, "score": 0.5}
     ]
+
+    conn = sqlite3.connect(temp_db)
+    conn.execute(
+        "INSERT INTO feedback (chunk_id, rating) VALUES (?, ?)", 
+        ("chunk_A", 1)
+    )
+    conn.commit()
+    conn.close()
+    
+    # 3. Run the optimizer
+    optimized = optimizer.boost_chunks(retrieved_chunks)
+    
+    # 4. Assertions
+    # chunk_A should now be at the top (index 0) because of the boost
+    assert optimized[0]["doc"].metadata["id"] == "chunk_A"
+    assert optimized[0]["score"] > 0.5
+    assert optimized[1]["score"] == 0.5
