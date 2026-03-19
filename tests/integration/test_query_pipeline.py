@@ -8,7 +8,6 @@ def test_full_query_pipeline_flow(mock_vector_store, mock_embedder):
     without crashing, and correctly extracts Document objects.
     """
     
-
     with patch('src.pipelines.query_pipeline.AnswerGenerator') as MockGenerator:
 
         instance = MockGenerator.return_value
