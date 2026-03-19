@@ -23,3 +23,22 @@ def mock_vector_store():
     # Mock FAISS search: returns distance 0.1 and index 0
     v_store.index.search.return_value = (np.array([[0.1]]), np.array([[0]]))
     return v_store
+
+@pytest.fixture
+def temp_db(tmp_path):
+    """Creates a temporary feedback database for testing."""
+    db_path = tmp_path / "test_feedback.db"
+    import sqlite3
+    conn = sqlite3.connect(db_path)
+    conn.execute("""
+        CREATE TABLE feedback (
+            id INTEGER PRIMARY KEY,
+            question TEXT,
+            answer TEXT,
+            chunk_id TEXT,
+            rating INTEGER,
+            timestamp TEXT
+        )
+    """)
+    conn.close()
+    return db_path
