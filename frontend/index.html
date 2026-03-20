@@ -146,4 +146,15 @@
 
         </div>
 
-    </footer>
+    </footer><script>
+
+        const API_BASE = "http://localhost:8000"
+
+        let uiLocked = false
+        const uiState = { isChatting: false }
+
+
+
+        window.onload = () => { updateRecentUI() }
+
+
