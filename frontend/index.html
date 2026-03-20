@@ -158,3 +158,36 @@
         window.onload = () => { updateRecentUI() }
 
 
+function updateRecentUI() {
+
+            const list = JSON.parse(localStorage.getItem('recentRepos') || '[]')
+
+            const container = document.getElementById('recentList')
+
+            if (!container) return
+
+            container.innerHTML = list.length ? '' : '<span class="text-slate-700 text-xs italic">No history yet</span>'
+
+
+            list.forEach(url => {
+
+                const name = url.split('/').pop().replace('.git', '')
+
+                const div = document.createElement('div')
+
+                div.className = "recent-tag bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs text-slate-400 hover:bg-slate-700 hover:text-cyan-400 transition-all"
+
+                div.innerText = name
+
+                div.onclick = (e) => {
+                    e.preventDefault()
+                    document.getElementById('repoUrl').value = url
+                    ingestRepo(e)
+                }
+
+                container.appendChild(div)
+
+            })
+
+        }
+
