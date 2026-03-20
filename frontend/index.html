@@ -146,7 +146,8 @@
 
         </div>
 
-    </footer><script>
+    </footer>
+    <script>
 
         const API_BASE = "http://localhost:8000"
 
@@ -158,7 +159,7 @@
         window.onload = () => { updateRecentUI() }
 
 
-function updateRecentUI() {
+        function updateRecentUI() {
 
             const list = JSON.parse(localStorage.getItem('recentRepos') || '[]')
 
@@ -190,4 +191,3 @@ function updateRecentUI() {
             })
 
         }
-
