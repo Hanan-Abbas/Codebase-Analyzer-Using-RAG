@@ -293,3 +293,34 @@
         }
 
 
+
+        const feedbackStore = {}
+
+
+        async function sendChat() {
+
+            const input = document.getElementById('userInput')
+            const prompt = input.value
+            const emptyState = document.getElementById('emptyState')
+
+            if (!prompt) return
+
+
+            if (!uiState.isChatting) {
+
+                uiState.isChatting = true
+
+                if (emptyState) {
+
+                    emptyState.classList.add('fade-out')
+
+                    setTimeout(() => {
+                        emptyState.style.display = 'none'
+                    }, 1000)
+
+                }
+
+            }
+
+
+        }
