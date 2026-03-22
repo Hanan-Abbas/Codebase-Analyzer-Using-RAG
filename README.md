@@ -288,3 +288,27 @@ Then you can type natural-language questions about the codebase and optionally r
 4. **Embed chunks** – `Embedder` encodes each chunk’s text using a Sentence-Transformers model on CPU.
 5. **Build vector index** – `VectorStore` stores embeddings in FAISS and saves metadata + a `structure.json` file listing all observed file paths.
 6. **Persist & cache** – The index is written to `data/vectors/<repo_name>` and also cached in memory when requested via FastAPI.
+
+### Query Pipeline
+
+1. **Retrieve** – `Retriever` encodes the user query and searches in FAISS for top-k similar chunks.
+2. **Rerank with feedback** – `RankingOptimizer` consults `feedback.db` and boosts chunks that historically led to helpful answers.
+3. **Build prompt** – `PromptBuilder` assembles:
+   - A “physical file system” view from `VectorStore.get_verified_structure()`.
+   - The top ranked code chunks with clear source file markers.
+   - Instructions tailored for code understanding and architecture explanations.
+4. **Generate answer** – `AnswerGenerator` calls the Groq-hosted LLM (OpenAI-compatible API) and streams the answer back to the caller.
+
+### Feedback & Learning Loop
+
+1. The frontend asks, **“Was this helpful?”** after each AI answer.
+2. On a 👍 or 👎 click, it sends `POST /feedback` with:
+   - `question` – the user’s original prompt.
+   - `answer` – the full AI response.
+   - `rating` – 1 for helpful, 0 for not helpful.
+3. `FeedbackCollector` writes this into a SQLite DB under `data/databases/feedback.db`.
+4. For future queries, `RankingOptimizer` reads this DB and slightly increases the score of chunks that have received positive feedback, biasing retrieval toward code that users found useful.
+
+Over time, this makes RepoMind **more accurate and tailored** to your way of asking questions.
+
+---
