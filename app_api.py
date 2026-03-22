@@ -91,3 +91,23 @@ async def ingest(request: IngestRequest):
     except Exception as e:
         print(f"INGEST ERROR: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/chat")
+async def chat(request: ChatRequest):
+    
+    with _lock:
+        store = _vector_stores.get(_current_repo) if _current_repo else None
+    if not store:
+        return {"answer": "⚠️ No repository indexed yet. Please paste a GitHub URL in the top bar first."}
+    
+    try:
+
+        answer = run_query(
+            query=request.prompt, 
+            vector_store=store, 
+            embedder=_get_embedder()
+        )
+        return {"answer": answer}
+    except Exception as e:
+        print(f"CHAT ERROR: {e}")
+        return {"answer": f"❌ Backend Error: {str(e)}"}
