@@ -55,3 +55,27 @@ You can interact with RepoMind in two ways:
 - A **terminal-based CLI** (`main.py`) with a Rich-powered chat interface.
 
 ---
+
+## Screenshots
+
+> Replace the image placeholders below with your own project screenshots.
+
+### Web UI – Home / Connect Repo
+
+```md
+![Web UI – Connect Repository](docs/images/web-home.png)
+```
+
+### Web UI – Chat with Codebase
+
+```md
+![Web UI – Chat Session](docs/images/web-chat.png)
+```
+
+### CLI – Interactive Session
+
+```md
+![CLI – RepoMind Terminal Chat](docs/images/cli-chat.png)
+```
+
+---
