@@ -94,7 +94,7 @@ async def ingest(request: IngestRequest):
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
-    
+
     with _lock:
         store = _vector_stores.get(_current_repo) if _current_repo else None
     if not store:
@@ -111,3 +111,18 @@ async def chat(request: ChatRequest):
     except Exception as e:
         print(f"CHAT ERROR: {e}")
         return {"answer": f"❌ Backend Error: {str(e)}"}
+
+
+@app.get("/health")
+async def health():
+    with _lock:
+        loaded_repos = list(_vector_stores.keys())
+        current_repo = _current_repo
+        embedder_loaded = _embedder is not None
+    return {
+        "status": "ok",
+        "embedder_loaded": embedder_loaded,
+        "current_repo": current_repo,
+        "cached_repos": loaded_repos,
+    }
+
