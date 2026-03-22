@@ -217,3 +217,26 @@ EMBEDDING_MODEL=all-MiniLM-L6-v2
 `config/settings.py` will load this file automatically and expose these values to the rest of the app.
 
 ---
+
+## Running the Project
+
+### Start the FastAPI Backend
+
+From the project root (with the virtualenv activated):
+
+```bash
+python3 app_api.py
+```
+
+This starts the API at `http://0.0.0.0:8000` with the following key endpoints:
+
+- `POST /ingest`
+- `POST /chat`
+- `POST /feedback`
+- `GET /health`
+
+You can quickly verify the server with:
+
+```bash
+curl http://localhost:8000/health
+```
