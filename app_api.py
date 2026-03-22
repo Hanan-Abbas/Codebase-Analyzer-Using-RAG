@@ -37,3 +37,19 @@ def _get_embedder() -> Embedder:
         if _embedder is None:
             _embedder = Embedder()
         return _embedder
+
+def _index_exists(repo_name: str) -> bool:
+    p = Path(VECTOR_DB_PATH) / repo_name
+    return (p / "index.faiss").exists() and (p / "metadata.pkl").exists()
+
+class IngestRequest(BaseModel):
+    url: str
+
+class ChatRequest(BaseModel):
+    prompt: str
+
+
+class FeedbackRequest(BaseModel):
+    question: str
+    answer: str
+    rating: int  # 1 = good, 0 = bad
