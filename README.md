@@ -240,3 +240,17 @@ You can quickly verify the server with:
 ```bash
 curl http://localhost:8000/health
 ```
+
+### Open the Web UI
+
+1. Open `frontend/index.html` directly in your browser (or serve it via a simple static file server).
+2. Paste a GitHub repository URL into the input and click **Analyze**.
+3. Wait for the progress bar to complete and the status to show **“Successfully connected … Ready to chat!”**.
+4. Ask questions in the chat input at the bottom.
+5. For each AI answer, use the **👍 / 👎** buttons to provide feedback (this will improve future results).
+
+> You can add a screenshot of this flow here:
+>
+> ```md
+> ![Web UI – Full Flow](docs/images/web-flow.png)
+> ```
