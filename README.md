@@ -254,3 +254,26 @@ curl http://localhost:8000/health
 > ```md
 > ![Web UI – Full Flow](docs/images/web-flow.png)
 > ```
+
+### Using the CLI
+
+The CLI uses the same pipelines and configuration but runs in the terminal:
+
+```bash
+python3 main.py
+```
+
+You will be prompted for:
+
+- A GitHub repository URL.
+- Whether to reuse an existing index (if found).
+
+Then you can type natural-language questions about the codebase and optionally rate answers (depending on your CLI flow).
+
+> Add a CLI screenshot here:
+>
+> ```md
+> ![CLI – RepoMind Session](docs/images/cli-session.png)
+> ```
+
+---
