@@ -79,3 +79,25 @@ You can interact with RepoMind in two ways:
 ```
 
 ---
+
+## Features
+
+- **Codebase-Aware Chat**: Ask questions about functions, architecture, and files using natural language.
+- **Semantic Code Search**: Retrieves code chunks based on meaning, not just keyword matching.
+- **FAISS Vector Indexing**: Efficient nearest-neighbor search over code embeddings.
+- **FastAPI Backend**: Production-ready API exposing `/ingest`, `/chat`, `/feedback`, and `/health`.
+- **Modern Web UI**:
+  - TailwindCSS styling.
+  - Markdown rendering (via `marked`).
+  - Code highlighting (via `Prism`).
+  - Recent repositories list and progress bar for ingestion.
+- **CLI Experience**: Rich-based terminal interface for power users.
+- **Feedback-Driven Learning**:
+  - Users can rate answers in the web UI (👍 / 👎).
+  - Feedback is stored in SQLite and used by a `RankingOptimizer` to boost helpful chunks in future queries.
+- **Local-First Storage**:
+  - Cloned repos are stored under `data/repos/`.
+  - Vector indices and metadata are stored under `data/vectors/`.
+  - Feedback is stored under `data/databases/`.
+
+---
