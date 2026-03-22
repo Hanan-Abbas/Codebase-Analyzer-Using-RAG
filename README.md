@@ -277,3 +277,14 @@ Then you can type natural-language questions about the codebase and optionally r
 > ```
 
 ---
+
+## How It Works
+
+### Ingestion Pipeline
+
+1. **Clone repository** – `RepoCloner` clones the target GitHub repo into `data/repos/<repo_name>`.
+2. **Scan files** – Walks the repo tree, skipping `IGNORE_DIRS` and selecting only `SUPPORTED_EXTENSIONS`.
+3. **Chunk code** – `CodeChunker` uses language-aware splitting (via LangChain text splitters) to build semantically meaningful chunks and attaches metadata such as relative `file_path`.
+4. **Embed chunks** – `Embedder` encodes each chunk’s text using a Sentence-Transformers model on CPU.
+5. **Build vector index** – `VectorStore` stores embeddings in FAISS and saves metadata + a `structure.json` file listing all observed file paths.
+6. **Persist & cache** – The index is written to `data/vectors/<repo_name>` and also cached in memory when requested via FastAPI.
