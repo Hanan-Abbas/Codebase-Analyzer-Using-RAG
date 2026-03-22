@@ -126,3 +126,26 @@ async def health():
         "cached_repos": loaded_repos,
     }
 
+
+
+@app.post("/feedback")
+async def feedback(request: FeedbackRequest):
+    """Store explicit user feedback so RankingOptimizer can learn over time."""
+    if request.rating not in (0, 1):
+        raise HTTPException(status_code=400, detail="rating must be 0 or 1")
+
+    global _feedback_collector
+    with _lock:
+        if _feedback_collector is None:
+            _feedback_collector = FeedbackCollector()
+        collector = _feedback_collector
+
+    try:
+        collector.save_feedback(request.question, request.answer, request.rating)
+        return {"status": "ok"}
+    except Exception as e:
+        print(f"FEEDBACK ERROR: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
