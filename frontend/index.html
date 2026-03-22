@@ -210,3 +210,37 @@
         }
 
 
+
+        async function ingestRepo(event) {
+
+            if (event) event.preventDefault()
+
+            const url = document.getElementById('repoUrl').value
+            const statusLine = document.getElementById('statusLine')
+            const btn = document.getElementById('analyzeBtn')
+            const progBar = document.getElementById('progressBar')
+            const progContainer = document.getElementById('progressContainer')
+
+            if (!url) return
+
+
+            const repoName = url.split('/').pop().replace('.git', '')
+
+            btn.disabled = true
+            progContainer.style.display = 'block'
+            progBar.style.width = '10%'
+
+            statusLine.innerHTML = `<span class="animate-pulse text-cyan-400">⏳ Indexing ${repoName}...</span>`
+
+
+            let progress = 10
+
+            let progInterval = setInterval(() => {
+
+                if (progress < 90) {
+                    progress += 1
+                    progBar.style.width = progress + "%"
+                }
+
+            }, 300)
+        }
