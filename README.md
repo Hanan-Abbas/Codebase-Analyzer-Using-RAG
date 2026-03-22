@@ -132,3 +132,48 @@ At a high level, RepoMind consists of:
   - CLI: `src/ui/cli_chat.py` and `main.py`.
 
 ---
+
+## Project Structure
+
+```text
+REPO Analyzer/
+├── app_api.py                 # FastAPI application (backend API)
+├── main.py                    # CLI entry point (terminal chat)
+├── config/
+│   └── settings.py            # Central configuration & .env loading
+├── frontend/
+│   └── index.html             # Web UI (Tailwind, marked, Prism)
+├── src/
+│   ├── pipelines/
+│   │   ├── ingest_pipeline.py # Ingestion/indexing pipeline
+│   │   └── query_pipeline.py  # Query + ranking + LLM pipeline
+│   ├── services/
+│   │   ├── repository_service/
+│   │   │   ├── clone_repo.py
+│   │   │   └── repo_metadata.py
+│   │   ├── processing_service/
+│   │   │   ├── code_cleaner.py
+│   │   │   └── code_chunker.py
+│   │   ├── embedding_service/
+│   │   │   └── embedder.py
+│   │   ├── vector_service/
+│   │   │   ├── retriever.py
+│   │   │   └── vector_store.py
+│   │   ├── llm_service/
+│   │   │   ├── prompt_builder.py
+│   │   │   └── answer_generator.py
+│   │   └── learning_service/
+│   │       ├── feedback_collector.py
+│   │       └── optimizer.py
+│   └── ui/
+│       └── cli_chat.py        # Rich-based CLI chat UI
+├── data/
+│   ├── repos/                 # Cloned repositories
+│   ├── vectors/               # Saved FAISS indices & metadata
+│   └── databases/             # SQLite feedback database
+├── requirements.txt
+├── .env                       # Environment configuration (not committed)
+└── README.md
+```
+
+---
