@@ -323,4 +323,31 @@
             }
 
 
+            appendMessage("User", prompt, false)
+
+            input.value = ''
+
+
+            try {
+
+                const res = await fetch(`${API_BASE}/chat`, {
+
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+
+                })
+
+                const data = await res.json()
+
+                appendMessage("RepoMind", data.answer, true, prompt)
+
+            }
+
+            catch {
+
+                appendMessage("RepoMind", "⚠️ Error: Backend unreachable.", true)
+
+            }
+
         }
