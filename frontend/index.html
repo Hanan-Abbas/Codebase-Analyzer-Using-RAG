@@ -399,3 +399,36 @@
 
             if (isAi) Prism.highlightAllUnder(wrapper)
         }
+
+
+        async function sendFeedback(id, rating, btnEl) {
+            const entry = feedbackStore[id]
+            if (!entry || entry.rated) return
+
+            entry.rated = true
+
+            try {
+                await fetch(`${API_BASE}/feedback`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: entry.question || "",
+                        answer: entry.answer || "",
+                        rating
+                    })
+                })
+                if (btnEl && btnEl.parentElement) {
+                    btnEl.parentElement.innerHTML = '<span class="text-xs text-emerald-400">Thanks for your feedback — future answers will improve.</span>'
+                }
+            } catch (e) {
+                if (btnEl && btnEl.parentElement) {
+                    btnEl.parentElement.innerHTML = '<span class="text-xs text-red-400">Could not save feedback.</span>'
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
