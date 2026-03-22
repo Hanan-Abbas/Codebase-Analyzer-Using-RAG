@@ -37,3 +37,21 @@ Over time, RepoMind learns from your feedback and improves the quality of its an
 - [License](#license)
 
 ---
+
+## Overview
+
+RepoMind is a **repository-aware RAG engine**:
+
+- It clones a GitHub repository locally.
+- Scans and chunks code files intelligently.
+- Embeds them with Sentence-Transformers.
+- Indexes them using **FAISS** for fast semantic search.
+- Uses a Groq-hosted LLM (OpenAI-compatible API) to answer natural-language questions about the code.
+- Learns from explicit user feedback (👍 / 👎) to improve retrieval quality over time.
+
+You can interact with RepoMind in two ways:
+
+- A **web UI** (`frontend/index.html`) powered by FastAPI endpoints.
+- A **terminal-based CLI** (`main.py`) with a Rich-powered chat interface.
+
+---
