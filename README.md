@@ -177,3 +177,22 @@ REPO Analyzer/
 ```
 
 ---
+
+## Getting Started
+
+### Prerequisites
+
+- **Python** 3.12+
+- **Git** installed and on your PATH
+- A **Groq API key** (for LLM calls)
+- Linux, macOS, or WSL recommended
+
+### Clone & Create Environment
+
+```bash
+git clone https://github.com/your-username/repomind.git
+cd "REPO Analyzer"
+
+python3 -m venv codebase
+source codebase/bin/activate        # Windows: .\codebase\Scripts\activate
+```
