@@ -331,3 +331,24 @@ All core configuration lives in `config/settings.py`:
 Adjust these values (or the `.env` file) to customize behavior for your environment.
 
 ---
+
+## Testing
+
+Basic test scaffolding can be added using `pytest`. A typical setup:
+
+```bash
+pytest -v
+```
+
+Recommended areas to test:
+
+- `RepoCloner` behavior on valid/invalid URLs.
+- `CodeChunker` chunking for different languages.
+- `Embedder` output shape and deterministic embeddings (for fixed seeds).
+- `VectorStore` save/load round trips.
+- `PromptBuilder` output structure given a small synthetic repo.
+- FastAPI endpoints (`/ingest`, `/chat`, `/feedback`) using `TestClient`.
+
+> You can document your own test files here once added, e.g. `tests/unit/test_vector_store.py`, etc.
+
+---
