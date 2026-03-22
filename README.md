@@ -196,3 +196,24 @@ cd "REPO Analyzer"
 python3 -m venv codebase
 source codebase/bin/activate        # Windows: .\codebase\Scripts\activate
 ```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Configure Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+GROQ_API_KEY=your_actual_groq_api_key
+GROQ_BASE_URL=https://api.groq.com/openai/v1
+LLM_MODEL=llama-3.3-70b-versatile
+EMBEDDING_MODEL=all-MiniLM-L6-v2
+```
+
+`config/settings.py` will load this file automatically and expose these values to the rest of the app.
+
+---
