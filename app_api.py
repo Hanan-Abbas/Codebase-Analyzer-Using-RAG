@@ -27,3 +27,13 @@ _embedder: Embedder | None = None
 _vector_stores: dict[str, VectorStore] = {}
 _current_repo: str | None = None
 _feedback_collector: FeedbackCollector | None = None
+
+def _get_repo_name(url: str) -> str:
+    return url.rstrip("/").split("/")[-1].replace(".git", "")
+
+def _get_embedder() -> Embedder:
+    global _embedder
+    with _lock:
+        if _embedder is None:
+            _embedder = Embedder()
+        return _embedder
