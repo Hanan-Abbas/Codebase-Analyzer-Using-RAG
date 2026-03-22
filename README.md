@@ -352,3 +352,13 @@ Recommended areas to test:
 > You can document your own test files here once added, e.g. `tests/unit/test_vector_store.py`, etc.
 
 ---
+
+## Roadmap
+
+- [ ] Add automated test suite and CI pipeline.
+- [ ] Add authentication / rate limiting for multi-user deployments.
+- [ ] Optional Docker setup for easier deployment.
+- [ ] Additional frontend views (e.g., file tree explorer, function list).
+- [ ] Support for more languages and file types.
+
+---
