@@ -243,5 +243,53 @@
                 }
 
             }, 300)
-            
+
+
+
+            try {
+
+                const res = await fetch(`${API_BASE}/ingest`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                })
+
+                if (!res.ok) {
+                    const errText = await res.text().catch(() => "")
+                    throw new Error(`HTTP ${res.status} ${res.statusText}${errText ? ` — ${errText}` : ""}`)
+                }
+
+                clearInterval(progInterval)
+                progBar.style.width = '100%'
+
+                statusLine.innerHTML =
+                    `✅ Successfully connected to <span class="text-cyan-400 font-bold">${repoName}</span>
+<br>
+<span class="text-sm text-slate-600 font-normal">Ready to chat!</span>`
+
+                saveToRecent(url)
+
+                setTimeout(() => {
+                    progContainer.style.display = 'none'
+                }, 1000)
+
+            }
+
+            catch (e) {
+
+                clearInterval(progInterval)
+                const details = (e && e.message) ? e.message : String(e)
+
+                statusLine.innerHTML = `<span class="text-red-400">❌ Connection Failed</span><div class="text-xs text-slate-500 mt-2 max-w-md break-words">${details}</div>`
+
+                progContainer.style.display = 'none'
+
+            }
+
+            finally {
+                btn.disabled = false
+            }
+
         }
+
+
