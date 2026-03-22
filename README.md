@@ -312,3 +312,22 @@ Then you can type natural-language questions about the codebase and optionally r
 Over time, this makes RepoMind **more accurate and tailored** to your way of asking questions.
 
 ---
+
+## Configuration
+
+All core configuration lives in `config/settings.py`:
+
+- **Paths**
+  - `BASE_DIR`, `REPO_STORAGE`, `VECTOR_DB_PATH`
+- **Chunking**
+  - `CHUNK_SIZE`, `CHUNK_OVERLAP`
+  - `SUPPORTED_EXTENSIONS`
+  - `IGNORE_DIRS`
+- **Models & LLM**
+  - `EMBEDDING_MODEL` (from `EMBEDDING_MODEL` env var, default `all-MiniLM-L6-v2`)
+  - `GROQ_API_KEY`, `GROQ_BASE_URL`
+  - `LLM_MODEL`
+
+Adjust these values (or the `.env` file) to customize behavior for your environment.
+
+---
