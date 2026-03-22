@@ -94,14 +94,15 @@ async def ingest(request: IngestRequest):
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
-
+    # Safety check: Is the store loaded?
     with _lock:
         store = _vector_stores.get(_current_repo) if _current_repo else None
     if not store:
         return {"answer": "⚠️ No repository indexed yet. Please paste a GitHub URL in the top bar first."}
     
     try:
-
+        # 2. Run the updated query pipeline
+        # It now internally handles getting the structure from vector_store
         answer = run_query(
             query=request.prompt, 
             vector_store=store, 
@@ -110,8 +111,8 @@ async def chat(request: ChatRequest):
         return {"answer": answer}
     except Exception as e:
         print(f"CHAT ERROR: {e}")
+        # Return the error as the answer so you can see it in the UI instead of a crash
         return {"answer": f"❌ Backend Error: {str(e)}"}
-
 
 @app.get("/health")
 async def health():
@@ -125,7 +126,6 @@ async def health():
         "current_repo": current_repo,
         "cached_repos": loaded_repos,
     }
-
 
 
 @app.post("/feedback")
