@@ -53,3 +53,41 @@ class FeedbackRequest(BaseModel):
     question: str
     answer: str
     rating: int  # 1 = good, 0 = bad
+
+@app.post("/ingest")
+async def ingest(request: IngestRequest):
+    try:
+        repo_name = _get_repo_name(request.url)
+
+        with _lock:
+            global _current_repo
+
+            # If it's already active and cached, do nothing.
+            if _current_repo == repo_name and repo_name in _vector_stores:
+                return {"status": "success", "message": f"✅ {repo_name} already loaded (cached)."}
+
+            # If cached from a previous request, reuse instantly.
+            if repo_name in _vector_stores:
+                _current_repo = repo_name
+                return {"status": "success", "message": f"✅ {repo_name} loaded from memory cache."}
+
+        # If an on-disk index exists, load it (fast) and cache it.
+        if _index_exists(repo_name):
+            store = VectorStore.load(repo_name)
+            with _lock:
+                _vector_stores[repo_name] = store
+                _current_repo = repo_name
+            return {"status": "success", "message": f"✅ {repo_name} loaded from disk index (cached in memory)."}
+
+        # Otherwise, ingest (slow path), then cache.
+        store = run_ingestion(request.url, embedder=_get_embedder(), force_reindex=False)
+        if not store:
+            raise HTTPException(status_code=500, detail="Ingestion failed to return a valid store.")
+
+        with _lock:
+            _vector_stores[repo_name] = store
+            _current_repo = repo_name
+        return {"status": "success", "message": f"✅ {repo_name} indexed and cached."}
+    except Exception as e:
+        print(f"INGEST ERROR: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
