@@ -9,3 +9,31 @@ It clones the repo, indexes the code with embeddings + FAISS, and lets you **cha
 Over time, RepoMind learns from your feedback and improves the quality of its answers.
 
 ---
+
+## 📌 Table of Contents
+
+- [Overview](#overview)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Clone & Create Environment](#clone--create-environment)
+  - [Install Dependencies](#install-dependencies)
+  - [Configure Environment Variables](#configure-environment-variables)
+- [Running the Project](#running-the-project)
+  - [Start the FastAPI Backend](#start-the-fastapi-backend)
+  - [Open the Web UI](#open-the-web-ui)
+  - [Using the CLI](#using-the-cli)
+- [How It Works](#how-it-works)
+  - [Ingestion Pipeline](#ingestion-pipeline)
+  - [Query Pipeline](#query-pipeline)
+  - [Feedback & Learning Loop](#feedback--learning-loop)
+- [Configuration](#configuration)
+- [Testing](#testing)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
