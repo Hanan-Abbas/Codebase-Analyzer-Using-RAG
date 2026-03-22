@@ -101,3 +101,34 @@ You can interact with RepoMind in two ways:
   - Feedback is stored under `data/databases/`.
 
 ---
+
+## Architecture
+
+At a high level, RepoMind consists of:
+
+- **FastAPI service** (`app_api.py`)
+  - `POST /ingest` – clone + index a new GitHub repo, or load an existing FAISS index from disk.
+  - `POST /chat` – run the query pipeline on the currently active repo.
+  - `POST /feedback` – store explicit user feedback (question, answer, rating).
+  - `GET /health` – basic health and cache status for monitoring.
+  - Maintains a **process-wide cache**:
+    - Single shared `Embedder`.
+    - Per-repo `VectorStore` instances in memory (plus disk persistence).
+
+- **Core pipelines** (`src/pipelines/`)
+  - `ingest_pipeline.py` – orchestrates cloning, scanning, chunking, embedding, and saving FAISS indices.
+  - `query_pipeline.py` – orchestrates retrieval, reranking, prompt building, and LLM answering.
+
+- **Services** (`src/services/`)
+  - `repository_service` – cloning and repo metadata.
+  - `processing_service` – code cleaning and chunking.
+  - `embedding_service` – Sentence-Transformers wrapper.
+  - `vector_service` – FAISS index + metadata persistence.
+  - `llm_service` – prompt construction and LLM calls (Groq/OpenAI-compatible).
+  - `learning_service` – feedback storage (`FeedbackCollector`) and ranking optimization (`RankingOptimizer`).
+
+- **UI layers**
+  - Web frontend: `frontend/index.html` (static SPA calling the FastAPI backend).
+  - CLI: `src/ui/cli_chat.py` and `main.py`.
+
+---
