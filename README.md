@@ -62,20 +62,20 @@ You can interact with RepoMind in two ways:
 
 ### Web UI – Home / Connect Repo
 
-```md
-![Web UI – Connect Repository](./Images/web_home.png)
-```
+
+![Web UI – Connect Repository](Images/web_home.png)
+
 
 ### Web UI – Chat with Codebase
 
 ```md
-![Web UI – Chat Session](./Images/web_chat.png)
+![Web UI – Chat Session](Images/web_chat.png)
 ```
 
 ### CLI – Interactive Session
 
 ```md
-![CLI – RepoMind Terminal Chat](./Images/cli_chat.png)
+![CLI – RepoMind Terminal Chat](Images/cli_chat.png)
 ```
 
 ---
