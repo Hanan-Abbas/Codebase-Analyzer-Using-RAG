@@ -25,4 +25,4 @@ def test_ingest_pipeline_logic():
             # 4. Assertions
             assert mock_clone.called
             assert vector_store is not None
-            MockMetadata.return_value.save.assert_called()
+            MockVectorStore.return_value.save.assert_called_with("fake")
