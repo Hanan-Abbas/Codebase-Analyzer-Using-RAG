@@ -186,8 +186,8 @@ REPO Analyzer/
 ### Clone & Create Environment
 
 ```bash
-git clone https://github.com/your-username/repomind.git
-cd "REPO Analyzer"
+git clone https://github.com/Hanan-Abbas/Codebase-Analyzer-Using-RAG.git
+cd "Codebase-Analyzer-Using-RAG"
 
 python3 -m venv codebase
 source codebase/bin/activate        # Windows: .\codebase\Scripts\activate
@@ -245,11 +245,6 @@ curl http://localhost:8000/health
 4. Ask questions in the chat input at the bottom.
 5. For each AI answer, use the **👍 / 👎** buttons to provide feedback (this will improve future results).
 
-> You can add a screenshot of this flow here:
->
-> ```md
-> ![Web UI – Full Flow](docs/images/web-flow.png)
-> ```
 
 ### Using the CLI
 
@@ -266,11 +261,7 @@ You will be prompted for:
 
 Then you can type natural-language questions about the codebase and optionally rate answers (depending on your CLI flow).
 
-> Add a CLI screenshot here:
->
-> ```md
-> ![CLI – RepoMind Session](docs/images/cli-session.png)
-> ```
+> ![CLI – RepoMind Session](Images/cli_chat.png)
 
 ---
 
