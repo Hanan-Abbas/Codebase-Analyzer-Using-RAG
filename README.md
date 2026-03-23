@@ -68,15 +68,11 @@ You can interact with RepoMind in two ways:
 
 ### Web UI – Chat with Codebase
 
-```md
 ![Web UI – Chat Session](Images/web_chat.png)
-```
 
 ### CLI – Interactive Session
 
-```md
 ![CLI – RepoMind Terminal Chat](Images/cli_chat.png)
-```
 
 ---
 
