@@ -324,7 +324,7 @@ Adjust these values (or the `.env` file) to customize behavior for your environm
 Basic test scaffolding can be added using `pytest`. A typical setup:
 
 ```bash
-pytest -v
+python3 -m pytest -v
 ```
 
 Recommended areas to test:
