@@ -26,4 +26,4 @@ class RepoMetadata:
         if meta_path.exists():
             with open(meta_path, "r") as f:
                 return json.load(f)
-        return Non
+        return None
