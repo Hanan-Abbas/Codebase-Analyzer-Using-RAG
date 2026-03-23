@@ -336,8 +336,6 @@ Recommended areas to test:
 - `PromptBuilder` output structure given a small synthetic repo.
 - FastAPI endpoints (`/ingest`, `/chat`, `/feedback`) using `TestClient`.
 
-> You can document your own test files here once added, e.g. `tests/unit/test_vector_store.py`, etc.
-
 ---
 
 ## Roadmap
