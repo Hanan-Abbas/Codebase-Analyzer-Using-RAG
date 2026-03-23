@@ -8,8 +8,7 @@ def test_optimizer_boosts_helpful_chunks(temp_db):
     Test that a chunk with positive feedback gets a higher score.
     """
     optimizer = RankingOptimizer()
-    optimizer.db_path = temp_db
-s
+    optimizer.db_path = temp_dbs
     doc_a = MagicMock()
     doc_a.metadata = {"id": "chunk_A"}
     
