@@ -23,3 +23,24 @@ def temp_db(tmp_path):
     conn.commit()
     conn.close()
     return str(db_file)
+
+def test_feedback_collection(temp_db):
+    """Test that feedback is correctly saved to the database."""
+    collector = FeedbackCollector(db_path=temp_db)
+
+    # Simulate a user giving a thumbs up (rating=1)
+    collector.save_feedback(
+        query="How does auth work?",
+        chunk_id="auth_service.py_chunk_1",
+        rating=1
+    )
+
+    # Verify it exists in the DB
+    conn = sqlite3.connect(temp_db)
+    cursor = conn.execute("SELECT chunk_id, rating FROM feedback")
+    row = cursor.fetchone()
+    conn.close()
+
+    assert row is not None
+    assert row[0] == "auth_service.py_chunk_1"
+    assert row[1] == 1
