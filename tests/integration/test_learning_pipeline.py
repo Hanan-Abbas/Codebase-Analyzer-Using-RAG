@@ -66,3 +66,8 @@ def test_optimizer_ranking_with_feedback(temp_db):
         {"doc": doc_hit, "score": 0.4},
         {"doc": doc_miss, "score": 0.4}
     ]
+
+
+    assert optimized_results[0]["doc"].metadata["id"] == "target_chunk"
+    assert optimized_results[0]["score"] > 0.4
+    assert optimized_results[1]["score"] == 0.4
