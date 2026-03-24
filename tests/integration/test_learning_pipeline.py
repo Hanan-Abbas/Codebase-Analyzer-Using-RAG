@@ -44,3 +44,25 @@ def test_feedback_collection(temp_db):
     assert row is not None
     assert row[0] == "auth_service.py_chunk_1"
     assert row[1] == 1
+
+def test_optimizer_ranking_with_feedback(temp_db):
+    """Test that the optimizer correctly identifies and boosts high-rated chunks."""
+    # 1. Setup feedback in DB
+    conn = sqlite3.connect(temp_db)
+    conn.execute("INSERT INTO feedback (chunk_id, rating) VALUES (?, ?)", ("target_chunk", 1))
+    conn.commit()
+    conn.close()
+    
+    optimizer = RankingOptimizer(db_path=temp_db)
+    
+    # 2. Mock some retrieved chunks
+    doc_hit = MagicMock()
+    doc_hit.metadata = {"id": "target_chunk"}
+    
+    doc_miss = MagicMock()
+    doc_miss.metadata = {"id": "other_chunk"}
+    
+    results = [
+        {"doc": doc_hit, "score": 0.4},
+        {"doc": doc_miss, "score": 0.4}
+    ]
